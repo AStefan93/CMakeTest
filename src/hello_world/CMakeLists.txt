@@ -11,7 +11,6 @@ add_library(HelloWorld hello_world.cpp)
 
 enable_testing()
 add_executable(TestHelloWorld test_hello_world.cpp)
-
 target_link_libraries(TestHelloWorld HelloWorld GTest::gtest_main)
 
 include(GoogleTest)

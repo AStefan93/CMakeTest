@@ -1,7 +1,6 @@
 #include <stdexcept>
 #include <utility>
 
-// #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 #include "hello_world.hpp"
 
