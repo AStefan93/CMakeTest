@@ -15,7 +15,7 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  UbuntuLatest:
+  DevContainer:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
@@ -28,7 +28,7 @@ jobs:
           image: "local:latest"
 
   Clang:
-    needs: UbuntuLatest
+    needs: DevContainer
     strategy:
       matrix:
         compiler: [g++, clang]
