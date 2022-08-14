@@ -31,6 +31,7 @@ jobs:
     needs: UbuntuLatest
     strategy:
       matrix:
+        compiler: [g++, clang]
         config: [Debug, Release]
     runs-on: ubuntu-latest
     steps:
@@ -41,6 +42,8 @@ jobs:
           image: "local:latest"
       - name: Run container
         run: docker run --name localContainer -idt --volume $PWD:/srv local
+      - name: Configure
+        run: docker exec -w/srv localContainer /usr/bin/cmake --no-warn-unused-cli -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE -DCMAKE_BUILD_TYPE:STRING=${{ matrix.config }} -DCMAKE_CXX_COMPILER:FILEPATH=/usr/bin/${{ matrix.compiler }} -S/workspaces/CMakeTest -B/workspaces/CMakeTest/build -G Ninja
       - name: Build
         run: docker exec -w/srv localContainer /usr/bin/cmake --build /workspaces/CMakeTest/build --config ${{ matrix.config }} --target all --
       # - name: IWYU
