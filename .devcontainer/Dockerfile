@@ -22,5 +22,9 @@ RUN apt-get update && apt-get -y install build-essential cppcheck valgrind clang
     && apt-get -y install nodejs npm \
     && apt-get -y install wget \
     && apt-get -y install python3 \
+    && apt-get -y install python3-pip \
     && apt-get -y install default-jdk \
     && apt-get -y install lcov
+
+# Install cmake-format
+Run pip install cmake_format

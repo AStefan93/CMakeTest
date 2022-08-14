@@ -33,7 +33,8 @@
 				"matepek.vscode-catch2-test-adapter",
 				"redhat.vscode-xml",
 				"redhat.vscode-yaml",
-				"github.copilot"
+				"github.copilot",
+				"cheshirekow.cmake-format"
 			]
 		}
 	},
