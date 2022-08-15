@@ -34,6 +34,8 @@ jobs:
         compiler: [g++, clang]
         config: [Debug, Release]
     runs-on: ubuntu-latest
+    env:
+      working-directory: /srv
     steps:
       - uses: actions/checkout@v3
       - name: Download image
@@ -41,14 +43,14 @@ jobs:
         with:
           image: "local:latest"
       - name: Run container
-        run: docker run --name localContainer -idt --volume $PWD:/srv local
+        run: docker run --name localContainer -idt --volume $PWD:${{env.working-directory}} local
       - name: Configure
-        run: docker exec -w/srv localContainer /usr/bin/cmake --no-warn-unused-cli -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE -DCMAKE_BUILD_TYPE:STRING=${{ matrix.config }} -DCMAKE_CXX_COMPILER:FILEPATH=/usr/bin/${{ matrix.compiler }} -S/workspaces/CMakeTest -B/workspaces/CMakeTest/build -G Ninja
+        run: docker exec -w${{env.working-directory}} localContainer /usr/bin/cmake --no-warn-unused-cli -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE -DCMAKE_BUILD_TYPE:STRING=${{ matrix.config }} -DCMAKE_CXX_COMPILER:FILEPATH=/usr/bin/${{ matrix.compiler }} -S${{env.working-directory}} -B${{env.working-directory}}/build -G Ninja
       - name: Build
-        run: docker exec -w/srv localContainer /usr/bin/cmake --build /workspaces/CMakeTest/build --config ${{ matrix.config }} --target all --
+        run: docker exec -w${{env.working-directory}} localContainer /usr/bin/cmake --build ${{env.working-directory}}/build --config ${{ matrix.config }} --target all --
       # - name: IWYU
-      #   run: docker exec -w/srv localContainer sudo bazel build --config=iwyu ...
+      #   run: docker exec -w${{env.working-directory}} localContainer sudo bazel build --config=iwyu ...
       # - name: cppcheck
-      #   run: docker exec -w/srv localContainer sudo cppcheck src --enable=all --inconclusive --library=posix --project=compile_commands.json -iexternal -ibazel-out --suppress-xml=src/cppcheck_suppressions.xml
+      #   run: docker exec -w${{env.working-directory}} localContainer sudo cppcheck src --enable=all --inconclusive --library=posix --project=compile_commands.json -iexternal -ibazel-out --suppress-xml=src/cppcheck_suppressions.xml
       # - name: clang-tidy check
-      #   run: docker exec -w/srv localContainer sudo clang-tidy src/applications/addressbook/addressbook.cpp
+      #   run: docker exec -w${{env.working-directory}} localContainer sudo clang-tidy src/applications/addressbook/addressbook.cpp
