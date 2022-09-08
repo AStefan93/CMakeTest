@@ -20,11 +20,3 @@ include(build/conan.cmake)
 conan_cmake_run(REQUIRES gtest/1.12.1 BASIC_SETUP CMAKE_TARGETS)
 
 add_subdirectory(src/hello_world)
-
-# # Add Gtest include(FetchContent) FetchContent_Declare( googletest
-# GIT_REPOSITORY https://github.com/google/googletest.git GIT_TAG
-# release-1.12.1)
-
-# # For Windows: Prevent overriding the parent project's compiler/linker
-# settings set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-# FetchContent_MakeAvailable(googletest)
