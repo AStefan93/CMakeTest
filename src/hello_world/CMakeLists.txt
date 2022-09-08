@@ -11,7 +11,7 @@ add_library(HelloWorld hello_world.cpp)
 
 enable_testing()
 add_executable(TestHelloWorld test_hello_world.cpp)
-target_link_libraries(TestHelloWorld HelloWorld ${CONAN_LIBS})
+target_link_libraries(TestHelloWorld HelloWorld CONAN_PKG::gtest)
 
 include(GoogleTest)
 gtest_discover_tests(TestHelloWorld)
