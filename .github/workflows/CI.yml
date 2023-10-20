@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Build docker images
         run: docker build -t local -f .devcontainer/Dockerfile .
       - name: Upload image
@@ -37,7 +37,7 @@ jobs:
     env:
       working-directory: /srv
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Download image
         uses: ishworkh/docker-image-artifact-download@v1
         with:
